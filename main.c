@@ -1,30 +1,49 @@
-#include <stdio.h>
+#include <iostream>
+#include <string>
 
-int main() {
-    FILE *fp;
-    int a[] = {0, 1, 2};
-    char b[] = "ABC";
-    float c[] = {1.1, 1.2, 1.3};
+using namespace std;
 
-    fp = fopen("a.bin", "wb");
-    fwrite(a, sizeof(a), 1, fp);
-    fwrite(b, sizeof(b) - 1, 1, fp);  
-    fwrite(c, sizeof(c), 1, fp);
-    fclose(fp);
-
-    int ra[3];
-    char rb[3];
-    float rc[3];
+class Car{
+public:
+    string brand;
+    string driveMode;
     
-    fp = fopen("a.bin", "rb");
-    fread(ra, sizeof(ra), 1, fp);
-    fread(rb, sizeof(rb), 1, fp);
-    fread(rc, sizeof(rc), 1, fp);
-    fclose(fp);
+    Car(string b, string d){
+        brand = b;
+        driveMode = d;
+        cout << "Constructing" << brand << "_Car" <<endl;
+    }
+    
+    void showDriveMode(){
+        cout << brand << ":Drive Mode =" << driveMode <<endl;
+    }
+};
 
-    printf("%d %d %d\n", ra[0], ra[1], ra[2]);
-    printf("%c %c %c\n", rb[0], rb[1], rb[2]);
-    printf("%.6f %.6f %.6f\n", rc[0], rc[1], rc[2]);
+class BMW_Car:public Car{
+public:
+    BMW_Car():Car("BMW","Rear-wheel"){}
+};
+
+class AUDI_Car:public Car{
+public:
+    AUDI_Car():Car("AUDI","Front-wheel"){}
+};
+
+class BENZ_Car:public Car{
+public:
+    BENZ_Car():Car("BENZ","Front-wheel"){}
+};
+
+int main()
+{
+    BMW_Car bmw;
+    bmw.showDriveMode();
+    
+    AUDI_Car audi;
+    audi.showDriveMode();
+    
+    BENZ_Car benz;
+    benz.showDriveMode();
 
     return 0;
 }
